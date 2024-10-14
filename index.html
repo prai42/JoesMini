@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Money Flow Calculator</title>
+    <title>Joe's Mini Market Daily Report</title>
     <style>
         /* CSS Styles */
 
@@ -23,9 +23,15 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        h1, h2 {
+        h1 {
             text-align: center;
             color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 18px; /* Adjusted font size */
         }
 
         .input-group {
@@ -108,7 +114,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Money Flow Calculator</h1>
+        <h1>Joe's Mini Market Daily Report</h1>
         <form id="moneyFlowForm">
             <!-- User Details -->
             <div class="input-group">
@@ -122,15 +128,15 @@
 
             <!-- Financial Inputs -->
             <div class="input-group">
-                <label for="beginningBal">Beginning Balance ($):</label>
+                <label for="beginningBal">Beginning Balance (Yesterday's Ending Balance) ($):</label>
                 <input type="number" id="beginningBal" step="0.01" required>
             </div>
             <div class="input-group">
-                <label for="deposit">Deposit ($):</label>
+                <label for="deposit">Deposit (Yesterday's Bag) ($):</label>
                 <input type="number" id="deposit" step="0.01" required>
             </div>
             <div class="input-group">
-                <label for="changesIn">Changes In ($):</label>
+                <label for="changesIn">Changes In ($) (Changes got from Bank, if no put 0):</label>
                 <input type="number" id="changesIn" step="0.01" required>
             </div>
             <div class="input-group">
@@ -184,35 +190,35 @@
                     <td id="displayEmployeeName"></td>
                 </tr>
                 <tr>
-                    <th>Beginning Balance ($)</th>
+                    <th>Beginning Balance</th>
                     <td id="displayBeginningBal"></td>
                 </tr>
                 <tr>
-                    <th>Deposit ($)</th>
+                    <th>Deposit</th>
                     <td id="displayDeposit"></td>
                 </tr>
                 <tr>
-                    <th>Changes In ($)</th>
+                    <th>Changes In</th>
                     <td id="displayChangesIn"></td>
                 </tr>
                 <tr>
-                    <th>Register 1 ($)</th>
+                    <th>Register 1</th>
                     <td id="displayRegister1"></td>
                 </tr>
                 <tr>
-                    <th>Register 2 ($)</th>
+                    <th>Register 2</th>
                     <td id="displayRegister2"></td>
                 </tr>
                 <tr>
-                    <th>Bag ($)</th>
+                    <th>Bag</th>
                     <td id="displayBag"></td>
                 </tr>
                 <tr>
-                    <th>Box ($)</th>
+                    <th>Box</th>
                     <td id="displayBox"></td>
                 </tr>
                 <tr>
-                    <th>Credit/EBT Sales ($)</th>
+                    <th>Credit/EBT Sales</th>
                     <td id="displayCreditEbtSales"></td>
                 </tr>
                 <!-- Removed the following four fields from Reporting Summary
@@ -270,98 +276,59 @@
     </div>
 
     <script>
-        // JavaScript Functionality
+        // JavaScript Code for Form Submission
+        document.getElementById('moneyFlowForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        document.getElementById('moneyFlowForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent form from submitting
-
-            // Retrieve and parse input values
+            // Get input values
             const date = document.getElementById('date').value;
-            const employeeName = document.getElementById('employeeName').value.trim();
+            const employeeName = document.getElementById('employeeName').value;
+            const beginningBal = parseFloat(document.getElementById('beginningBal').value);
+            const deposit = parseFloat(document.getElementById('deposit').value);
+            const changesIn = parseFloat(document.getElementById('changesIn').value);
+            const register1 = parseFloat(document.getElementById('register1').value);
+            const register2 = parseFloat(document.getElementById('register2').value);
+            const bag = parseFloat(document.getElementById('bag').value);
+            const box = parseFloat(document.getElementById('box').value);
+            const creditEbtSales = parseFloat(document.getElementById('creditEbtSales').value);
+            const printOutTotalSales = parseFloat(document.getElementById('printOutTotalSales').value);
+            const taxableSales = parseFloat(document.getElementById('taxableSales').value);
+            const nonTaxableSales = parseFloat(document.getElementById('nonTaxableSales').value);
+            const cashPurchases = parseFloat(document.getElementById('cashPurchases').value);
 
-            const beginningBal = parseFloat(document.getElementById('beginningBal').value) || 0;
-            const deposit = parseFloat(document.getElementById('deposit').value) || 0;
-            const changesIn = parseFloat(document.getElementById('changesIn').value) || 0;
-            const register1 = parseFloat(document.getElementById('register1').value) || 0;
-            const register2 = parseFloat(document.getElementById('register2').value) || 0;
-            const bag = parseFloat(document.getElementById('bag').value) || 0;
-            const box = parseFloat(document.getElementById('box').value) || 0;
-            const creditEbtSales = parseFloat(document.getElementById('creditEbtSales').value) || 0;
-            const printOutTotalSales = parseFloat(document.getElementById('printOutTotalSales').value) || 0;
-            const taxableSales = parseFloat(document.getElementById('taxableSales').value) || 0;
-            const nonTaxableSales = parseFloat(document.getElementById('nonTaxableSales').value) || 0;
-            const cashPurchases = parseFloat(document.getElementById('cashPurchases').value) || 0;
+            // Calculate Ending Balance
+            const endingBal = beginningBal + deposit + changesIn + register1 + register2 + bag + box;
+            const actualMoneyFlow = endingBal - cashPurchases;
 
-            // Validating Inputs
-            if (!date) {
-                alert('Please enter a valid date.');
-                return;
-            }
-
-            if (employeeName === '') {
-                alert('Please enter the employee name.');
-                return;
-            }
-
-            const inputs = [beginningBal, deposit, changesIn, register1, register2, bag, box, creditEbtSales, printOutTotalSales, taxableSales, nonTaxableSales, cashPurchases];
-            const inputNames = [
-                "Beginning Balance",
-                "Deposit",
-                "Changes In",
-                "Register 1",
-                "Register 2",
-                "Bag",
-                "Box",
-                "Credit/EBT Sales",
-                "Print Out Total Sales",
-                "Taxable Sales",
-                "Non-Taxable Sales",
-                "Cash Purchases"
-            ];
-
-            for (let i = 0; i < inputs.length; i++) {
-                if (isNaN(inputs[i])) {
-                    alert(`Please enter a valid number for ${inputNames[i]}.`);
-                    return;
-                }
-            }
-
-            // Calculations
-            const endingBal = register1 + register2 + bag + box;
-            const actualMoneyFlow = ((endingBal + deposit + creditEbtSales) - beginningBal) - changesIn;
-
-            // Display Reporting Summary
+            // Display results
             document.getElementById('displayDate').textContent = date;
             document.getElementById('displayEmployeeName').textContent = employeeName;
-            document.getElementById('displayBeginningBal').textContent = `$${beginningBal.toFixed(2)}`;
-            document.getElementById('displayDeposit').textContent = `$${deposit.toFixed(2)}`;
-            document.getElementById('displayChangesIn').textContent = `$${changesIn.toFixed(2)}`;
-            document.getElementById('displayRegister1').textContent = `$${register1.toFixed(2)}`;
-            document.getElementById('displayRegister2').textContent = `$${register2.toFixed(2)}`;
-            document.getElementById('displayBag').textContent = `$${bag.toFixed(2)}`;
-            document.getElementById('displayBox').textContent = `$${box.toFixed(2)}`;
-            document.getElementById('displayCreditEbtSales').textContent = `$${creditEbtSales.toFixed(2)}`;
-            // Removed the following lines as they are no longer displayed in Reporting Summary
-            // document.getElementById('displayPrintOutTotalSales').textContent = `$${printOutTotalSales.toFixed(2)}`;
-            // document.getElementById('displayTaxableSales').textContent = `$${taxableSales.toFixed(2)}`;
-            // document.getElementById('displayNonTaxableSales').textContent = `$${nonTaxableSales.toFixed(2)}`;
-            // document.getElementById('displayCashPurchases').textContent = `$${cashPurchases.toFixed(2)}`;
+            document.getElementById('displayBeginningBal').textContent = beginningBal.toFixed(2);
+            document.getElementById('displayDeposit').textContent = deposit.toFixed(2);
+            document.getElementById('displayChangesIn').textContent = changesIn.toFixed(2);
+            document.getElementById('displayRegister1').textContent = register1.toFixed(2);
+            document.getElementById('displayRegister2').textContent = register2.toFixed(2);
+            document.getElementById('displayBag').textContent = bag.toFixed(2);
+            document.getElementById('displayBox').textContent = box.toFixed(2);
+            document.getElementById('displayCreditEbtSales').textContent = creditEbtSales.toFixed(2);
+            // Removed the following four fields from Reporting Summary
+            // document.getElementById('displayPrintOutTotalSales').textContent = printOutTotalSales.toFixed(2);
+            // document.getElementById('displayTaxableSales').textContent = taxableSales.toFixed(2);
+            // document.getElementById('displayNonTaxableSales').textContent = nonTaxableSales.toFixed(2);
+            // document.getElementById('displayCashPurchases').textContent = cashPurchases.toFixed(2);
 
-            // Display Calculations
-            document.getElementById('endingBal').textContent = `$${endingBal.toFixed(2)}`;
-            document.getElementById('actualMoneyFlow').textContent = `$${actualMoneyFlow.toFixed(2)}`;
+            // Set results in calculations section
+            document.getElementById('endingBal').textContent = endingBal.toFixed(2);
+            document.getElementById('actualMoneyFlow').textContent = actualMoneyFlow.toFixed(2);
 
-            // Display Summary
-            document.getElementById('printOutTotalSalesResult').textContent = `$${printOutTotalSales.toFixed(2)}`;
-            document.getElementById('taxableSalesResult').textContent = `$${taxableSales.toFixed(2)}`;
-            document.getElementById('nonTaxableSalesResult').textContent = `$${nonTaxableSales.toFixed(2)}`;
-            document.getElementById('cashPurchasesResult').textContent = `$${cashPurchases.toFixed(2)}`;
+            // Set results in summary section
+            document.getElementById('printOutTotalSalesResult').textContent = printOutTotalSales.toFixed(2);
+            document.getElementById('taxableSalesResult').textContent = taxableSales.toFixed(2);
+            document.getElementById('nonTaxableSalesResult').textContent = nonTaxableSales.toFixed(2);
+            document.getElementById('cashPurchasesResult').textContent = cashPurchases.toFixed(2);
 
-            // Show results
+            // Show results section
             document.getElementById('results').classList.remove('hidden');
-
-            // Optionally, clear the form after submission
-            // document.getElementById('moneyFlowForm').reset();
         });
     </script>
 </body>
