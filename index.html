@@ -11,14 +11,14 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
-            padding: 20px;
+            padding: 10px; /* Reduced padding for better fit on mobile */
         }
 
         .container {
             max-width: 800px;
             margin: auto;
             background: #fff;
-            padding: 30px;
+            padding: 20px; /* Reduced padding */
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -26,38 +26,41 @@
         h1 {
             text-align: center;
             color: #333;
-            font-size: 24px; /* Reduced font size */
+            font-size: 22px; /* Slightly smaller font size */
         }
 
         h2 {
             text-align: center;
             color: #333;
-            font-size: 16px; /* Adjusted font size */
+            font-size: 16px; /* Smaller section titles */
+            margin-top: 20px;
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 10px; /* Reduced margin for better fit */
         }
 
         .input-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 3px; /* Reduced margin */
             color: #555;
+            font-size: 14px; /* Smaller label font size */
         }
 
         .input-group input {
             width: 100%;
-            padding: 8px;
+            padding: 6px; /* Reduced padding */
             box-sizing: border-box;
+            font-size: 14px; /* Smaller input font size */
         }
 
         button {
             width: 100%;
-            padding: 10px;
+            padding: 8px; /* Reduced padding */
             background-color: #28a745;
             border: none;
             color: #fff;
-            font-size: 16px;
+            font-size: 14px; /* Smaller button font size */
             border-radius: 4px;
             cursor: pointer;
             margin-top: 10px;
@@ -68,11 +71,11 @@
         }
 
         #results {
-            margin-top: 20px;
-            padding: 20px;
+            margin-top: 15px; /* Reduced margin */
+            padding: 15px; /* Reduced padding */
             background-color: #e9ecef;
             border-radius: 8px;
-            font-size: 14px; /* Reduced the font size for results */
+            font-size: 14px; /* Reduced font size */
         }
 
         .hidden {
@@ -83,8 +86,8 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
-            font-size: 14px; /* Reduced table font size */
+            margin-bottom: 15px; /* Reduced margin */
+            font-size: 13px; /* Smaller table font size */
         }
 
         table, th, td {
@@ -92,39 +95,43 @@
         }
 
         th, td {
-            padding: 10px; /* Reduced padding */
+            padding: 8px; /* Reduced padding */
             text-align: left;
         }
 
         th {
             background-color: #f2f2f2;
+            font-size: 14px; /* Slightly larger for headers */
         }
 
         /* Mobile Specific Adjustments */
         @media (max-width: 600px) {
             .container {
-                padding: 15px; /* Reduced container padding */
+                padding: 15px; /* Adjusted padding */
             }
 
             h1 {
-                font-size: 20px; /* Reduced font size for mobile */
+                font-size: 20px;
             }
 
             h2 {
-                font-size: 14px; /* Smaller section titles for mobile */
+                font-size: 14px;
+            }
+
+            .input-group label,
+            .input-group input,
+            button,
+            #results,
+            table, th, td {
+                font-size: 12px; /* Further reduce font sizes on mobile */
             }
 
             button {
-                font-size: 14px; /* Smaller button font size */
+                padding: 6px;
             }
 
             table, th, td {
-                font-size: 12px; /* Further reduce table font size for mobile */
-                padding: 8px; /* Adjust padding */
-            }
-
-            #results {
-                font-size: 12px; /* Smaller result font size for mobile */
+                padding: 6px;
             }
         }
     </style>
@@ -275,30 +282,66 @@
     </div>
 
     <script>
-        document.getElementById('moneyFlowForm').addEventListener('submit', function (e) {
-            e.preventDefault();
+        // JavaScript Code for Form Submission
+        document.getElementById('moneyFlowForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-            // Get input values
+            // Retrieve input values
             const date = document.getElementById('date').value;
-            const employeeName = document.getElementById('employeeName').value;
-            const beginningBal = parseFloat(document.getElementById('beginningBal').value);
-            const deposit = parseFloat(document.getElementById('deposit').value);
-            const changesIn = parseFloat(document.getElementById('changesIn').value);
-            const register1 = parseFloat(document.getElementById('register1').value);
-            const register2 = parseFloat(document.getElementById('register2').value);
-            const bag = parseFloat(document.getElementById('bag').value);
-            const box = parseFloat(document.getElementById('box').value);
-            const creditEbtSales = parseFloat(document.getElementById('creditEbtSales').value);
-            const printOutTotalSales = parseFloat(document.getElementById('printOutTotalSales').value);
-            const taxableSales = parseFloat(document.getElementById('taxableSales').value);
-            const nonTaxableSales = parseFloat(document.getElementById('nonTaxableSales').value);
-            const cashPurchases = parseFloat(document.getElementById('cashPurchases').value);
+            const employeeName = document.getElementById('employeeName').value.trim();
 
-            // Calculate Ending Balance
-            const endingBal = beginningBal + deposit + changesIn + register1 + register2 + bag + box;
-            const actualMoneyFlow = endingBal - cashPurchases;
+            const beginningBal = parseFloat(document.getElementById('beginningBal').value) || 0;
+            const deposit = parseFloat(document.getElementById('deposit').value) || 0;
+            const changesIn = parseFloat(document.getElementById('changesIn').value) || 0;
+            const register1 = parseFloat(document.getElementById('register1').value) || 0;
+            const register2 = parseFloat(document.getElementById('register2').value) || 0;
+            const bag = parseFloat(document.getElementById('bag').value) || 0;
+            const box = parseFloat(document.getElementById('box').value) || 0;
+            const creditEbtSales = parseFloat(document.getElementById('creditEbtSales').value) || 0;
+            const printOutTotalSales = parseFloat(document.getElementById('printOutTotalSales').value) || 0;
+            const taxableSales = parseFloat(document.getElementById('taxableSales').value) || 0;
+            const nonTaxableSales = parseFloat(document.getElementById('nonTaxableSales').value) || 0;
+            const cashPurchases = parseFloat(document.getElementById('cashPurchases').value) || 0;
 
-            // Display results with $ sign
+            // Validation
+            if (!date) {
+                alert('Please enter a valid date.');
+                return;
+            }
+
+            if (employeeName === '') {
+                alert('Please enter the employee name.');
+                return;
+            }
+
+            const inputs = [beginningBal, deposit, changesIn, register1, register2, bag, box, creditEbtSales, printOutTotalSales, taxableSales, nonTaxableSales, cashPurchases];
+            const inputNames = [
+                "Beginning Balance",
+                "Deposit",
+                "Changes In",
+                "Register 1",
+                "Register 2",
+                "Bag",
+                "Box",
+                "Credit/EBT Sales",
+                "Print Out Total Sales",
+                "Taxable Sales",
+                "Non-Taxable Sales",
+                "Cash Purchases"
+            ];
+
+            for (let i = 0; i < inputs.length; i++) {
+                if (isNaN(inputs[i])) {
+                    alert(`Please enter a valid number for ${inputNames[i]}.`);
+                    return;
+                }
+            }
+
+            // Calculations
+            const endingBal = register1 + register2 + bag + box;
+            const actualMoneyFlow = ((endingBal + deposit + creditEbtSales) - beginningBal) - changesIn;
+
+            // Display Reporting Summary
             document.getElementById('displayDate').textContent = date;
             document.getElementById('displayEmployeeName').textContent = employeeName;
             document.getElementById('displayBeginningBal').textContent = `$ ${beginningBal.toFixed(2)}`;
@@ -310,11 +353,11 @@
             document.getElementById('displayBox').textContent = `$ ${box.toFixed(2)}`;
             document.getElementById('displayCreditEbtSales').textContent = `$ ${creditEbtSales.toFixed(2)}`;
 
-            // Set results in calculations section
+            // Display Calculations
             document.getElementById('endingBal').textContent = `$ ${endingBal.toFixed(2)}`;
             document.getElementById('actualMoneyFlow').textContent = `$ ${actualMoneyFlow.toFixed(2)}`;
 
-            // Set results in summary section
+            // Display Summary
             document.getElementById('printOutTotalSalesResult').textContent = `$ ${printOutTotalSales.toFixed(2)}`;
             document.getElementById('taxableSalesResult').textContent = `$ ${taxableSales.toFixed(2)}`;
             document.getElementById('nonTaxableSalesResult').textContent = `$ ${nonTaxableSales.toFixed(2)}`;
