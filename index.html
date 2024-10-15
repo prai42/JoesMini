@@ -282,6 +282,16 @@
     </div>
 
     <script>
+        // Helper function to format date from YYYY-MM-DD to MM/DD/YYYY
+        function formatDate(dateStr) {
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) return dateStr; // Return original if invalid
+            const month = parts[1].padStart(2, '0');
+            const day = parts[2].padStart(2, '0');
+            const year = parts[0];
+            return `${month}/${day}/${year}`;
+        }
+
         // JavaScript Code for Form Submission
         document.getElementById('moneyFlowForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -337,12 +347,12 @@
                 }
             }
 
-            // Calculations
+            // Calculate Ending Balance
             const endingBal = register1 + register2 + bag + box;
             const actualMoneyFlow = ((endingBal + deposit + creditEbtSales) - beginningBal) - changesIn;
 
             // Display Reporting Summary
-            document.getElementById('displayDate').textContent = date;
+            document.getElementById('displayDate').textContent = formatDate(date);
             document.getElementById('displayEmployeeName').textContent = employeeName;
             document.getElementById('displayBeginningBal').textContent = `$ ${beginningBal.toFixed(2)}`;
             document.getElementById('displayDeposit').textContent = `$ ${deposit.toFixed(2)}`;
