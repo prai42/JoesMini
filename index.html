@@ -26,12 +26,13 @@
         h1 {
             text-align: center;
             color: #333;
+            font-size: 24px; /* Reduced font size */
         }
 
         h2 {
             text-align: center;
             color: #333;
-            font-size: 18px; /* Adjusted font size */
+            font-size: 16px; /* Adjusted font size */
         }
 
         .input-group {
@@ -71,6 +72,7 @@
             padding: 20px;
             background-color: #e9ecef;
             border-radius: 8px;
+            font-size: 14px; /* Reduced the font size for results */
         }
 
         .hidden {
@@ -82,6 +84,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            font-size: 14px; /* Reduced table font size */
         }
 
         table, th, td {
@@ -89,7 +92,7 @@
         }
 
         th, td {
-            padding: 12px;
+            padding: 10px; /* Reduced padding */
             text-align: left;
         }
 
@@ -97,17 +100,31 @@
             background-color: #f2f2f2;
         }
 
+        /* Mobile Specific Adjustments */
         @media (max-width: 600px) {
             .container {
-                padding: 20px;
+                padding: 15px; /* Reduced container padding */
+            }
+
+            h1 {
+                font-size: 20px; /* Reduced font size for mobile */
+            }
+
+            h2 {
+                font-size: 14px; /* Smaller section titles for mobile */
             }
 
             button {
-                font-size: 14px;
+                font-size: 14px; /* Smaller button font size */
             }
 
             table, th, td {
-                font-size: 14px;
+                font-size: 12px; /* Further reduce table font size for mobile */
+                padding: 8px; /* Adjust padding */
+            }
+
+            #results {
+                font-size: 12px; /* Smaller result font size for mobile */
             }
         }
     </style>
@@ -190,55 +207,37 @@
                     <td id="displayEmployeeName"></td>
                 </tr>
                 <tr>
-                    <th>Beginning Balance</th>
+                    <th>Beginning Balance ($)</th>
                     <td id="displayBeginningBal"></td>
                 </tr>
                 <tr>
-                    <th>Deposit</th>
+                    <th>Deposit ($)</th>
                     <td id="displayDeposit"></td>
                 </tr>
                 <tr>
-                    <th>Changes In</th>
+                    <th>Changes In ($)</th>
                     <td id="displayChangesIn"></td>
                 </tr>
                 <tr>
-                    <th>Register 1</th>
+                    <th>Register 1 ($)</th>
                     <td id="displayRegister1"></td>
                 </tr>
                 <tr>
-                    <th>Register 2</th>
+                    <th>Register 2 ($)</th>
                     <td id="displayRegister2"></td>
                 </tr>
                 <tr>
-                    <th>Bag</th>
+                    <th>Bag ($)</th>
                     <td id="displayBag"></td>
                 </tr>
                 <tr>
-                    <th>Box</th>
+                    <th>Box ($)</th>
                     <td id="displayBox"></td>
                 </tr>
                 <tr>
-                    <th>Credit/EBT Sales</th>
+                    <th>Credit/EBT Sales ($)</th>
                     <td id="displayCreditEbtSales"></td>
                 </tr>
-                <!-- Removed the following four fields from Reporting Summary
-                <tr>
-                    <th>Print Out Total Sales ($)</th>
-                    <td id="displayPrintOutTotalSales"></td>
-                </tr>
-                <tr>
-                    <th>Taxable Sales ($)</th>
-                    <td id="displayTaxableSales"></td>
-                </tr>
-                <tr>
-                    <th>Non-Taxable Sales ($)</th>
-                    <td id="displayNonTaxableSales"></td>
-                </tr>
-                <tr>
-                    <th>Cash Purchases ($)</th>
-                    <td id="displayCashPurchases"></td>
-                </tr>
-                -->
             </table>
 
             <h2>--- Calculations ---</h2>
@@ -276,9 +275,8 @@
     </div>
 
     <script>
-        // JavaScript Code for Form Submission
-        document.getElementById('moneyFlowForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        document.getElementById('moneyFlowForm').addEventListener('submit', function (e) {
+            e.preventDefault();
 
             // Get input values
             const date = document.getElementById('date').value;
@@ -300,32 +298,27 @@
             const endingBal = beginningBal + deposit + changesIn + register1 + register2 + bag + box;
             const actualMoneyFlow = endingBal - cashPurchases;
 
-            // Display results
+            // Display results with $ sign
             document.getElementById('displayDate').textContent = date;
             document.getElementById('displayEmployeeName').textContent = employeeName;
-            document.getElementById('displayBeginningBal').textContent = beginningBal.toFixed(2);
-            document.getElementById('displayDeposit').textContent = deposit.toFixed(2);
-            document.getElementById('displayChangesIn').textContent = changesIn.toFixed(2);
-            document.getElementById('displayRegister1').textContent = register1.toFixed(2);
-            document.getElementById('displayRegister2').textContent = register2.toFixed(2);
-            document.getElementById('displayBag').textContent = bag.toFixed(2);
-            document.getElementById('displayBox').textContent = box.toFixed(2);
-            document.getElementById('displayCreditEbtSales').textContent = creditEbtSales.toFixed(2);
-            // Removed the following four fields from Reporting Summary
-            // document.getElementById('displayPrintOutTotalSales').textContent = printOutTotalSales.toFixed(2);
-            // document.getElementById('displayTaxableSales').textContent = taxableSales.toFixed(2);
-            // document.getElementById('displayNonTaxableSales').textContent = nonTaxableSales.toFixed(2);
-            // document.getElementById('displayCashPurchases').textContent = cashPurchases.toFixed(2);
+            document.getElementById('displayBeginningBal').textContent = `$ ${beginningBal.toFixed(2)}`;
+            document.getElementById('displayDeposit').textContent = `$ ${deposit.toFixed(2)}`;
+            document.getElementById('displayChangesIn').textContent = `$ ${changesIn.toFixed(2)}`;
+            document.getElementById('displayRegister1').textContent = `$ ${register1.toFixed(2)}`;
+            document.getElementById('displayRegister2').textContent = `$ ${register2.toFixed(2)}`;
+            document.getElementById('displayBag').textContent = `$ ${bag.toFixed(2)}`;
+            document.getElementById('displayBox').textContent = `$ ${box.toFixed(2)}`;
+            document.getElementById('displayCreditEbtSales').textContent = `$ ${creditEbtSales.toFixed(2)}`;
 
             // Set results in calculations section
-            document.getElementById('endingBal').textContent = endingBal.toFixed(2);
-            document.getElementById('actualMoneyFlow').textContent = actualMoneyFlow.toFixed(2);
+            document.getElementById('endingBal').textContent = `$ ${endingBal.toFixed(2)}`;
+            document.getElementById('actualMoneyFlow').textContent = `$ ${actualMoneyFlow.toFixed(2)}`;
 
             // Set results in summary section
-            document.getElementById('printOutTotalSalesResult').textContent = printOutTotalSales.toFixed(2);
-            document.getElementById('taxableSalesResult').textContent = taxableSales.toFixed(2);
-            document.getElementById('nonTaxableSalesResult').textContent = nonTaxableSales.toFixed(2);
-            document.getElementById('cashPurchasesResult').textContent = cashPurchases.toFixed(2);
+            document.getElementById('printOutTotalSalesResult').textContent = `$ ${printOutTotalSales.toFixed(2)}`;
+            document.getElementById('taxableSalesResult').textContent = `$ ${taxableSales.toFixed(2)}`;
+            document.getElementById('nonTaxableSalesResult').textContent = `$ ${nonTaxableSales.toFixed(2)}`;
+            document.getElementById('cashPurchasesResult').textContent = `$ ${cashPurchases.toFixed(2)}`;
 
             // Show results section
             document.getElementById('results').classList.remove('hidden');
