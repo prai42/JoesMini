@@ -3,320 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joe's Mini Market Daily Report</title>
+    <title>Joe's Mini Market</title>
     <style>
-        /* CSS Styles */
-
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
-            padding: 10px;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
 
         .container {
-            max-width: 800px;
-            margin: auto;
-            background: #fff;
+            background: white;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
         }
 
         h1 {
-            text-align: center;
+            font-size: 24px;
             color: #333;
-            font-size: 22px;
         }
 
-        h2 {
-            text-align: center;
-            color: #333;
-            font-size: 16px;
+        nav {
             margin-top: 20px;
         }
 
-        .input-group {
-            margin-bottom: 10px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 3px;
-            color: #555;
-            font-size: 14px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 6px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-
-        button {
-            width: 100%;
-            padding: 8px;
+        nav a {
+            display: inline-block;
+            margin: 10px 5px;
+            padding: 10px 20px;
             background-color: #28a745;
-            border: none;
-            color: #fff;
-            font-size: 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
 
-        button:hover {
+        nav a:hover {
             background-color: #218838;
         }
 
-        #results {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #e9ecef;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 15px;
-            font-size: 13px;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            font-size: 14px;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 20px;
-            }
-
-            h2 {
-                font-size: 14px;
-            }
-
-            .input-group label,
-            .input-group input,
-            button,
-            #results,
-            table, th, td {
-                font-size: 12px;
-            }
-
-            button {
-                padding: 6px;
-            }
-
-            table, th, td {
-                padding: 6px;
-            }
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #555;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Joe's Mini Market Daily Report</h1>
-        <form id="moneyFlowForm">
-            <!-- User Details -->
-            <div class="input-group">
-                <label for="date">Date:</label>
-                <input type="date" id="date" required>
-            </div>
-            <div class="input-group">
-                <label for="employeeName">Employee Name:</label>
-                <input type="text" id="employeeName" placeholder="Enter employee name" required>
-            </div>
-
-            <!-- Financial Inputs -->
-            <div class="input-group">
-                <label for="beginningBal">Beginning Balance (Yesterday's Ending Balance) ($):</label>
-                <input type="number" id="beginningBal" step="0.01" required>
-            </div>
-            <div class="input-group">
-                <label for="deposit">Deposit (Yesterday's Bag) ($):</label>
-                <input type="number" id="deposit" step="0.01" required>
-            </div>
-            <div class="input-group">
-                <label for="changesIn">Changes In ($) (Changes got from Bank, if no put 0):</label>
-                <input type="number" id="changesIn" step="0.01" required>
-            </div>
-            <div class="input-group">
-                <label for="register1">Register ($):</label>
-                <input type="number" id="register1" step="0.01" required>
-            </div>
-            <div class="input-group">
-                <label for="bag">Bag ($):</label>
-                <input type="number" id="bag" step="0.01" required>
-            </div>
-            <div class="input-group">
-                <label for="box">Box ($):</label>
-                <input type="number" id="box" step="0.01" required>
-            </div>
-            <div class="input-group">
-                <label for="creditEbtSales">Credit/EBT Sales ($):</label>
-                <input type="number" id="creditEbtSales" step="0.01" required>
-            </div>
-            <div class="input-group">
-                <label for="printOutTotalSales">Print Out Total Sales ($):</label>
-                <input type="number" id="printOutTotalSales" step="0.01" required>
-            </div>
-            <div class="input-group">
-                <label for="taxableSales">Taxable Sales ($):</label>
-                <input type="number" id="taxableSales" step="0.01" required>
-            </div>
-            <div class="input-group">
-                <label for="nonTaxableSales">Non-Taxable Sales ($):</label>
-                <input type="number" id="nonTaxableSales" step="0.01" required>
-            </div>
-            <div class="input-group">
-                <label for="cashPurchases">Cash Purchases ($):</label>
-                <input type="number" id="cashPurchases" step="0.01" required>
-            </div>
-            <button type="submit">Calculate</button>
-        </form>
-
-        <div id="results" class="hidden">
-            <h2>--- Reporting Summary ---</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <td id="displayDate"></td>
-                </tr>
-                <tr>
-                    <th>Employee Name</th>
-                    <td id="displayEmployeeName"></td>
-                </tr>
-                <tr>
-                    <th>Beginning Balance ($)</th>
-                    <td id="displayBeginningBal"></td>
-                </tr>
-                <tr>
-                    <th>Deposit ($)</th>
-                    <td id="displayDeposit"></td>
-                </tr>
-                <tr>
-                    <th>Changes In ($)</th>
-                    <td id="displayChangesIn"></td>
-                </tr>
-                <tr>
-                    <th>Register ($)</th>
-                    <td id="displayRegister1"></td>
-                </tr>
-                <tr>
-                    <th>Bag ($)</th>
-                    <td id="displayBag"></td>
-                </tr>
-                <tr>
-                    <th>Box ($)</th>
-                    <td id="displayBox"></td>
-                </tr>
-                <tr>
-                    <th>Credit/EBT Sales ($)</th>
-                    <td id="displayCreditEbtSales"></td>
-                </tr>
-            </table>
-
-            <h2>--- Calculations ---</h2>
-            <table>
-                <tr>
-                    <th>Ending Balance ($)</th>
-                    <td id="endingBal"></td>
-                </tr>
-                <tr>
-                    <th>Actual Money Flow ($)</th>
-                    <td id="actualMoneyFlow"></td>
-                </tr>
-            </table>
-
-            <h2>--- Summary ---</h2>
-            <table>
-                <tr>
-                    <th>Print Out Total Sales ($)</th>
-                    <td id="printOutTotalSalesResult"></td>
-                </tr>
-                <tr>
-                    <th>Taxable Sales ($)</th>
-                    <td id="taxableSalesResult"></td>
-                </tr>
-                <tr>
-                    <th>Non-Taxable Sales ($)</th>
-                    <td id="nonTaxableSalesResult"></td>
-                </tr>
-                <tr>
-                    <th>Cash Purchases ($)</th>
-                    <td id="cashPurchasesResult"></td>
-                </tr>
-            </table>
-        </div>
+        <h1>Welcome to Joe's Mini Market</h1>
+        <nav>
+            <a href="parwat-money-calculator.html">Calculator</a>
+            <a href="reporting.html">Reporting</a>
+            <a href="register.html">Register</a>
+        </nav>
     </div>
-
-    <script>
-        document.getElementById('moneyFlowForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            // Retrieve input values
-            const beginningBal = parseFloat(document.getElementById('beginningBal').value) || 0;
-            const deposit = parseFloat(document.getElementById('deposit').value) || 0;
-            const changesIn = parseFloat(document.getElementById('changesIn').value) || 0;
-            const register1 = parseFloat(document.getElementById('register1').value) || 0;
-            const bag = parseFloat(document.getElementById('bag').value) || 0;
-            const box = parseFloat(document.getElementById('box').value) || 0;
-            const creditEbtSales = parseFloat(document.getElementById('creditEbtSales').value) || 0;
-            const printOutTotalSales = parseFloat(document.getElementById('printOutTotalSales').value) || 0;
-            const taxableSales = parseFloat(document.getElementById('taxableSales').value) || 0;
-            const nonTaxableSales = parseFloat(document.getElementById('nonTaxableSales').value) || 0;
-            const cashPurchases = parseFloat(document.getElementById('cashPurchases').value) || 0;
-
-            // Calculate Ending Balance and Actual Money Flow
-            const endingBal = register1 + bag + box;
-            const actualMoneyFlow = ((endingBal + deposit + creditEbtSales) - beginningBal) - changesIn;
-
-            // Display Reporting Summary
-            document.getElementById('displayDate').textContent = document.getElementById('date').value;
-            document.getElementById('displayEmployeeName').textContent = document.getElementById('employeeName').value;
-            document.getElementById('displayBeginningBal').textContent = `$ ${beginningBal.toFixed(2)}`;
-            document.getElementById('displayDeposit').textContent = `$ ${deposit.toFixed(2)}`;
-            document.getElementById('displayChangesIn').textContent = `$ ${changesIn.toFixed(2)}`;
-            document.getElementById('displayRegister1').textContent = `$ ${register1.toFixed(2)}`;
-            document.getElementById('displayBag').textContent = `$ ${bag.toFixed(2)}`;
-            document.getElementById('displayBox').textContent = `$ ${box.toFixed(2)}`;
-            document.getElementById('displayCreditEbtSales').textContent = `$ ${creditEbtSales.toFixed(2)}`;
-
-            // Display Calculations
-            document.getElementById('endingBal').textContent = `$ ${endingBal.toFixed(2)}`;
-            document.getElementById('actualMoneyFlow').textContent = `$ ${actualMoneyFlow.toFixed(2)}`;
-
-            // Display Summary
-            document.getElementById('printOutTotalSalesResult').textContent = `$ ${printOutTotalSales.toFixed(2)}`;
-            document.getElementById('taxableSalesResult').textContent = `$ ${taxableSales.toFixed(2)}`;
-            document.getElementById('nonTaxableSalesResult').textContent = `$ ${nonTaxableSales.toFixed(2)}`;
-            document.getElementById('cashPurchasesResult').textContent = `$ ${cashPurchases.toFixed(2)}`;
-
-            // Show results section
-            document.getElementById('results').classList.remove('hidden');
-        });
-    </script>
+    <footer>&copy; 2025 Joe's Mini Market</footer>
 </body>
 </html>
-
