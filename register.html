@@ -112,7 +112,7 @@
             const fiftyDollar = parseInt(document.getElementById("fiftyDollar").value) || 0;
             const hundredDollar = parseInt(document.getElementById("hundredDollar").value) || 0;
 
-            // Calculate totals
+            // Step 1: Count everything
             const total = (
                 pennies * 0.01 +
                 nickels * 0.05 +
@@ -126,27 +126,39 @@
                 hundredDollar * 100
             );
 
-            const deposit = (
+            // Step 2: Collect $10 and larger bills as the initial bag money
+            const initialBagMoney = (
                 tenDollar * 10 +
                 twentyDollar * 20 +
                 fiftyDollar * 50 +
                 hundredDollar * 100
             );
 
-            const remainingCash = total - deposit;
-            let resultHtml = `<p>Total cash in register: $${total.toFixed(2)}</p>`;
+            // Calculate remaining cash in the register after removing bag money
+            const remainingCash = total - initialBagMoney;
+
+            // Step 3: Adjust to leave exactly $200 in the register
+            let finalBagMoney = initialBagMoney;
+            let adjustmentMessage = "";
 
             if (remainingCash > 200) {
-                const extraToBank = remainingCash - 200;
-                resultHtml += `<p class="to-bag">Add $${extraToBank.toFixed(2)} to the bag to leave exactly $200 in the register.</p>`;
+                // If register has more than $200, move the extra to the bag
+                const extraToBag = remainingCash - 200;
+                finalBagMoney += extraToBag;
+                adjustmentMessage = `<p class="to-bag">Add $${extraToBag.toFixed(2)} to the bag to leave exactly $200 in the register.</p>`;
             } else if (remainingCash < 200) {
+                // If register has less than $200, take the shortfall from the bag
                 const shortfall = 200 - remainingCash;
-                resultHtml += `<p class="from-bag">Take $${shortfall.toFixed(2)} from the bag and put it back in the register to leave $200.</p>`;
+                finalBagMoney -= shortfall;
+                adjustmentMessage = `<p class="from-bag">Take $${shortfall.toFixed(2)} from the bag and put it back in the register to leave $200.</p>`;
             } else {
-                resultHtml += `<p>The register already has exactly $200.</p>`;
+                adjustmentMessage = `<p>The register already has exactly $200.</p>`;
             }
 
-            resultHtml += `<p>Final Bag Money: $${deposit.toFixed(2)}</p>`;
+            // Step 4: Display results
+            let resultHtml = `<p>Total cash in register: $${total.toFixed(2)}</p>`;
+            resultHtml += adjustmentMessage;
+            resultHtml += `<p>Final Bag Money: $${finalBagMoney.toFixed(2)}</p>`;
 
             document.getElementById("result").innerHTML = resultHtml;
         });
