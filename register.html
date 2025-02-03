@@ -144,21 +144,26 @@
             if (remainingCash > 200) {
                 // If register has more than $200, move the extra to the bag
                 const extraToBag = remainingCash - 200;
-                finalBagMoney += extraToBag;
-                adjustmentMessage = `<p class="to-bag">Add $${extraToBag.toFixed(2)} to the bag to leave exactly $200 in the register.</p>`;
+                const roundedExtraToBag = Math.floor(extraToBag / 5) * 5; // Round down to nearest $5
+                finalBagMoney += roundedExtraToBag;
+                adjustmentMessage = `<p class="to-bag">Add $${roundedExtraToBag.toFixed(2)} to the bag to leave exactly $200 in the register.</p>`;
             } else if (remainingCash < 200) {
                 // If register has less than $200, take the shortfall from the bag
                 const shortfall = 200 - remainingCash;
-                finalBagMoney -= shortfall;
-                adjustmentMessage = `<p class="from-bag">Take $${shortfall.toFixed(2)} from the bag and put it back in the register to leave $200.</p>`;
+                const roundedShortfall = Math.ceil(shortfall / 5) * 5; // Round up to nearest $5
+                finalBagMoney -= roundedShortfall;
+                adjustmentMessage = `<p class="from-bag">Take $${roundedShortfall.toFixed(2)} from the bag and put it back in the register to leave $200.</p>`;
             } else {
                 adjustmentMessage = `<p>The register already has exactly $200.</p>`;
             }
 
-            // Step 4: Display results
-            let resultHtml = `<p>Total cash in register: $${total.toFixed(2)}</p>`;
-            resultHtml += adjustmentMessage;
-            resultHtml += `<p>Final Bag Money: $${finalBagMoney.toFixed(2)}</p>`;
+            // Step 4: Display results in the desired format
+            let resultHtml = `<ol>
+                <li><p>Total cash in register: $${total.toFixed(2)}</p></li>
+                <li><p>Take out all the bills ($10 and bigger) and put in the bag.</p></li>
+                <li>${adjustmentMessage}</li>
+                <li><p>Final Bag Money: $${finalBagMoney.toFixed(2)}</p></li>
+            </ol>`;
 
             document.getElementById("result").innerHTML = resultHtml;
         });
