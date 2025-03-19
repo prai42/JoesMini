@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Calculator - Joe's Mini Market</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 60px;
+            text-align: center;
+            margin: 5px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        h2 {
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .back-link {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .back-link:hover {
+            background-color: #218838;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cash Calculator</h1>
+        <label>$1 Bills: <input type="number" id="one" min="0" value="0"></label><br>
+        <label>$5 Bills: <input type="number" id="five" min="0" value="0"></label><br>
+        <label>$10 Bills: <input type="number" id="ten" min="0" value="0"></label><br>
+        <label>$20 Bills: <input type="number" id="twenty" min="0" value="0"></label><br>
+        <label>$50 Bills: <input type="number" id="fifty" min="0" value="0"></label><br>
+        <label>$100 Bills: <input type="number" id="hundred" min="0" value="0"></label><br>
+        <button onclick="calculateTotal()">Calculate Total</button>
+        <h2>Total: $<span id="total">0</span></h2>
+        <a href="index.html" class="back-link">Back to Home</a>
+    </div>
+    <footer>© 2025 Joe's Mini Market</footer>
+
+    <script>
+        function calculateTotal() {
+            let one = parseInt(document.getElementById('one').value) || 0;
+            let five = parseInt(document.getElementById('five').value) || 0;
+            let ten = parseInt(document.getElementById('ten').value) || 0;
+            let twenty = parseInt(document.getElementById('twenty').value) || 0;
+            let fifty = parseInt(document.getElementById('fifty').value) || 0;
+            let hundred = parseInt(document.getElementById('hundred').value) || 0;
+
+            let total = (one * 1) + (five * 5) + (ten * 10) + (twenty * 20) + (fifty * 50) + (hundred * 100);
+            document.getElementById('total').textContent = total;
+        }
+    </script>
+</body>
+</html>
